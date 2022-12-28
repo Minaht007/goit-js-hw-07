@@ -22,6 +22,21 @@ const galleries = document.querySelector(".gallery")
     }).join("");
  
     }
-// console.log(createGalleryItemsMarkup(galleryItems))
+galleries.insertAdjacentHTML("afterbegin", galleriItem);
 
-galleries.insertAdjacentHTML("afterbegin",galleriItem);
+// Добавляем слушателя на контейнер
+
+galleries.addEventListener('click', galleryItemsResize);
+
+function galleryItemsResize(evt) {
+    if (!evt.target.classList.contains('gallery__image')) {
+        return;
+    };
+   // Берем код из basic Lightbox
+const instance = basicLightbox.create(`
+    <img src="${evt.target.contains('${data-source}')}" width="800" height="600">
+`)
+    instance.show()
+  
+};
+
