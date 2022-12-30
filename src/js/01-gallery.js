@@ -1,42 +1,36 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-
-
-const galleries = document.querySelector(".gallery")
-    const galleriItem = createGalleryItemsMarkup(galleryItems); 
-    function createGalleryItemsMarkup(galleryItems) {
-    return galleryItems.map(({ preview, original, description }) => {
+window.onload = () => {
+  const galleries = document.querySelector(".gallery");
+  const galleriItem = createGalleryItemsMarkup(galleryItems);
+  function createGalleryItemsMarkup(galleryItems) {
+    return galleryItems
+      .map(({ preview, original, description }) => {
         return `
-        <div class="gallery__item">
-            <a href="" class="gallery__link">
-                <img
-                    class="gallery__image" 
-                    src="${preview}"
-                    data-source="${original}"
-                    alt="${description}"
-                />
-            </a>
-        </div>
-        `;
-    }).join("");
- 
-    }
-galleries.insertAdjacentHTML("afterbegin", galleriItem);
+            <div class="gallery__item">
+                <a href="#" class="gallery__link">
+                    <img
+                        class="gallery__image" 
+                        src="${preview}"
+                        data-source="${original}"
+                        alt="${description}"
+                    />
+                </a>
+            </div>
+            `;
+      })
+      .join("");
+  }
+  galleries.insertAdjacentHTML("afterbegin", galleriItem);
 
-// Добавляем слушателя на контейнер
+  // listen the click on the gallery div and pass element data to the image tag
+  document.querySelector(".gallery").onclick = (data) => {
+    console.log("click image", data);
+    const instance = basicLightbox.create(`
+      <img src="${data.path[0].currentSrc}" width="800" height="600">
+    `);
 
-galleries.addEventListener('click', galleryItemsResize);
-
-function galleryItemsResize(evt) {
-    if (!evt.target.classList.contains('gallery__image')) {
-        return;
-    };
-   // Берем код из basic Lightbox
-const instance = basicLightbox.create(`
-    <img src="${evt.target.contains('${data-source}')}" width="800" height="600">
-`)
-    instance.show()
-  
+    instance.show();
+  };
 };
-
